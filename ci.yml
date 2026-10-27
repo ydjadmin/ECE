@@ -1,0 +1,29 @@
+
+name: CI - PROF ECE
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    name: Vérifier le site
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Vérifier les fichiers HTML
+        run: |
+          test -f index.html
+          echo "Le fichier index.html existe !"
+
+      - name: Vérifier le contenu
+        run: |
+          grep -qi "<html" index.html
+          grep -qi "</html>" index.html
+          echo "Le HTML semble correct !"
